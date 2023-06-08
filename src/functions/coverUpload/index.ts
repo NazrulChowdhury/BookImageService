@@ -5,15 +5,11 @@ export default {
   events: [
     {
       eventBridge: {
+        eventBus: { Ref: 'BookImageEventBus' }, 
         pattern: {
           source: ['book-social-app'],
-          'detail-type': ['bookImageEvent'],
-          detail: {
-            bookId: ['$input.params(\'bookId\')'],
-            imageLink: ['$input.params(\'imageLink\')'],
-            documentId: ['$input.params(\'documentId\')']
-          }
-        },
+          'detail-type': ['triggerBookCoverUpload']
+        }
       },
     }
   ],

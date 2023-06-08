@@ -44,6 +44,7 @@ const serverlessConfiguration: AWS = {
       BUCKET_NAME : "${env:BUCKET_NAME}",
       AWS_ACCOUNT_ID:"${env:AWS_ACCOUNT_ID}",
       ORIGIN_URL: "${env:ORIGIN_URL}", // allow origin cors url
+      EVENT_BUS_NAME:"${env:EVENT_BUS_NAME}"
     },
     esbuild: {
       bundle: true,
