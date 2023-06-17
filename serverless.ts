@@ -1,8 +1,10 @@
 import type { AWS } from '@serverless/typescript'
-import coverUpload from '@functions/coverUpload'
-import { BookImageEventBus } from '@functions/resources/eventBridgeResource'
-import { bookCoverImageBucketPolicy, bookCoverImageBucket } from '@functions/resources/bucketResource'
+import { BookImageEventBus } from '@resources/eventBridgeResource'
+import { bookCoverImageBucketPolicy, bookCoverImageBucket } from '@resources/bucketResource'
 import { config } from 'dotenv'
+import { coverUpload } from '@functions'
+import updateDb from 'src/functions/updateDb'
+
 
 config();
 
@@ -26,7 +28,8 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: { 
-    coverUpload 
+    coverUpload,
+    updateDb 
   },
   resources:{ 
     Resources: { 
@@ -44,7 +47,8 @@ const serverlessConfiguration: AWS = {
       BUCKET_NAME : "${env:BUCKET_NAME}",
       AWS_ACCOUNT_ID:"${env:AWS_ACCOUNT_ID}",
       ORIGIN_URL: "${env:ORIGIN_URL}", // allow origin cors url
-      EVENT_BUS_NAME:"${env:EVENT_BUS_NAME}"
+      EVENT_BUS_NAME:"${env:EVENT_BUS_NAME}",
+      MONGO_URI:"${env:MONGO_URI}"
     },
     esbuild: {
       bundle: true,

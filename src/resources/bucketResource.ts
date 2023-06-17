@@ -54,7 +54,18 @@ export const bookCoverImageBucketPolicy = {
           Principal: "*",
           Action: ["s3:GetObject"],
           Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] }
-        }
+        },
+        // {
+        //   Sid: 'AllowLambdaInvocation',
+        //   Effect: 'Allow',
+        //   Principal: {
+        //     Service: 'lambda.amazonaws.com',
+        //   },
+        //   Action: ['lambda:InvokeFunction'],
+        //   Resource: {
+        //     'Fn::Sub': 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:service}-${self:provider.stage}-updateDb'
+        //   }
+        // }
       ],
     },
   },

@@ -44,6 +44,10 @@ export const main: Handler = async (event) => {
           Key: imageName,
           Body: await convertedBuffer.getBufferAsync(Jimp.MIME_JPEG),
           ContentType: 'image/jpeg',
+          Metadata: {
+            bookId,
+            documentId,
+          }
         })
         .promise()
     } else {
@@ -53,6 +57,10 @@ export const main: Handler = async (event) => {
           Key: imageName,
           Body: imageBuffer,
           ContentType: 'image/jpeg',
+          Metadata: {
+            bookId,
+            documentId,
+          },
         })
         .promise()
     }
