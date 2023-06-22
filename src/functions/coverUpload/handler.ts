@@ -32,7 +32,7 @@ export const main: Handler = async (event) => {
 
     // Convert to JPEG if not already in JPEG format
     if (!isJPEGFormat(imageLink)) {
-      const tempFilePath = '/tmp/temp.jpg'
+      const tempFilePath = '/tmp/temp.jpeg'
       await image.quality(100).writeAsync(tempFilePath) // conversion happens based on the path's extension
 
       const convertedBuffer = await Jimp.read(tempFilePath)

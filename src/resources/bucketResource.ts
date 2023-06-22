@@ -13,12 +13,13 @@ export const bookCoverImageBucket = {
           },
         ],
       },
-      PublicAccessBlockConfiguration: {
-        BlockPublicAcls: false,
-        BlockPublicPolicy: false,
-        IgnorePublicAcls: false,
-        RestrictPublicBuckets: false,
-      },
+      // this was for making bucket public, redundant now. 
+      // PublicAccessBlockConfiguration: {
+      //   BlockPublicAcls: false,
+      //   BlockPublicPolicy: false,
+      //   IgnorePublicAcls: false,
+      //   RestrictPublicBuckets: false,
+      // },
       BucketEncryption: {
         ServerSideEncryptionConfiguration: [
           {
@@ -49,23 +50,19 @@ export const bookCoverImageBucketPolicy = {
           Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] },
         },
         {
-          Sid: "PublicRead",
+          Sid: "AllowCloudFrontServicePrincipal",
           Effect: "Allow",
-          Principal: "*",
-          Action: ["s3:GetObject"],
-          Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] }
-        },
-        // {
-        //   Sid: 'AllowLambdaInvocation',
-        //   Effect: 'Allow',
-        //   Principal: {
-        //     Service: 'lambda.amazonaws.com',
-        //   },
-        //   Action: ['lambda:InvokeFunction'],
-        //   Resource: {
-        //     'Fn::Sub': 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:service}-${self:provider.stage}-updateDb'
-        //   }
-        // }
+          Principal: {
+              "Service": "cloudfront.amazonaws.com"
+          },
+          Action: "s3:GetObject",
+          Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] },
+          Condition: {
+            StringEquals: {
+              "AWS:SourceArn": "arn:aws:cloudfront::299215296128:distribution/E1RU8DGCQ3UHF2"
+            }
+          }
+        }
       ],
     },
   },
