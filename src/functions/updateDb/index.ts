@@ -17,12 +17,15 @@ export default {
   ],
 
   iamRoleStatements: [
-      {
-        Effect: "Allow",
-        Action: "lambda:InvokeFunction",
-        Resource: "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}"
-      }
-    ]
-
-  
+    { // allows itself to be invoked by the bucket
+      Effect: 'Allow',
+      Action: ['lambda:InvokeFunction'],
+      Resource: "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}"
+    },
+    { // allows itself to access the bucket's head object
+      Effect: 'Allow',
+      Action: ['s3:GetObject'],
+      Resource: "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*"
+    }
+  ]
 };

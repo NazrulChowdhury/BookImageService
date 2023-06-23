@@ -13,6 +13,7 @@ export const main = async (event) => {
 
     // Retrieve the metadata using the headObject API
     const headObjectResponse = await s3.headObject({ Bucket: bucketName, Key: objectKey }).promise()
+
     const metadata = headObjectResponse.Metadata
 
     // Access specific metadata properties
