@@ -26,14 +26,14 @@ export const main = async (event) => {
     }
     
     //update db
-    await Book.findOneAndUpdate({
-      bookId
+   const res =  await Book.findOneAndUpdate({
+      _id : documentId
     },{
       $push : {
         bookCoversInS3 : bookId
       }
     })
-
+    console.log({res})
     // Perform database update or any other operations here
 
     await disconnectMongo()

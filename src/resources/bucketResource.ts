@@ -38,17 +38,17 @@ export const bookCoverImageBucketPolicy = {
     Bucket: { Ref: 'bookCoverImageBucket' },
     PolicyDocument: {
       Statement: [
-        {
-          Sid: 'AllowLambdaAccess',
-          Effect: 'Allow',
-          Principal: {
-            AWS: {
-              'Fn::Sub': 'arn:aws:iam::${AWS::AccountId}:role/${self:service}-${self:provider.stage}-coverUpload-${self:provider.region}-lambdaRole'
-            }
-          },
-          Action: ['s3:PutObject'],
-          Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] },
-        },
+        // {
+        //   Sid: 'AllowLambdaAccess',
+        //   Effect: 'Allow',
+        //   Principal: {
+        //     AWS: {
+        //       'Fn::Sub': 'arn:aws:iam::${AWS::AccountId}:role/${self:service}-${self:provider.stage}-coverUpload-${self:provider.region}-lambdaRole'
+        //     }
+        //   },
+        //   Action: ['s3:PutObject'],
+        //   Resource: { 'Fn::Join': ['', ['arn:aws:s3:::', { Ref: 'bookCoverImageBucket' }, '/*']] },
+        // },
         {
           Sid: "AllowCloudFrontServicePrincipal",
           Effect: "Allow",
